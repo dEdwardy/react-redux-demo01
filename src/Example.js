@@ -1,6 +1,26 @@
-import React, { useState, useEffect, createContext, useContext } from 'react';
+import React, { useState, useEffect, createContext, useContext, useReducer } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 const CountContext = createContext()
+function ReducerDemo() {
+  const [count, dispatch] = useReducer((state, action) => {
+    switch (action) {
+      case 'add':
+        return state + 1
+      case 'reduce':
+        return state - 1
+      default:
+        return state
+    }
+  }, 0)
+  return (
+    <div>
+      <h3>useReducer:</h3>
+      <span>{count}</span>
+      <button onClick={() => { dispatch('add') }}>+</button>
+      <button onClick={() => { dispatch('reduce') }}>-</button>
+    </div>
+  )
+}
 function Index() {
   useEffect(() => {
     console.log('index')
@@ -48,6 +68,7 @@ function Example() {
       <button onClick={() => setCount(count + 1)}>
         Click me
       </button>
+      <ReducerDemo />
       <Router>
         <ul>
           <li>
