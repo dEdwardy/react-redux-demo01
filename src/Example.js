@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+const CountContext = createContext()
 function Index() {
   useEffect(() => {
     console.log('index')
@@ -22,6 +23,12 @@ function List() {
     <h2>List Page</h2>
   )
 }
+function Counter() {
+  let count = useContext(CountContext);
+  return (
+    <h2>son:{count}</h2>
+  )
+}
 function Example() {
   const [count, setCount] = useState(0);
   //useEffect 代替生命周期钩子 componentDidMount componentDidUpdate...
@@ -34,6 +41,10 @@ function Example() {
   return (
     <div>
       <p>You clicked {count} times</p>
+
+      <CountContext.Provider value={count}>
+        <Counter />
+      </CountContext.Provider>
       <button onClick={() => setCount(count + 1)}>
         Click me
       </button>
